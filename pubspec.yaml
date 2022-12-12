@@ -12,6 +12,8 @@ dependencies:
   sp_util: 2.0.3
   google_fonts: 3.0.1
   material_design_icons_flutter: 6.0.7096
+  location: 4.4.0
+  geolocator: 9.0.2
   flutter: 
     sdk: flutter
 

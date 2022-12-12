@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 import '../controllers/home_controller.dart';
 
@@ -15,8 +16,20 @@ class HomeView extends GetView<HomeController> {
       ),
       body: Center(
         child: Text(
-          'HomeView is working',
+          controller.locationData.toString(),
           style: TextStyle(fontSize: 20),
+        ),
+      ),
+      floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          controller.determinePosition().then((value) {
+            // print(value)
+            // print all data
+          });
+        },
+        child: const Icon(
+          MdiIcons.locationEnter,
         ),
       ),
     );
