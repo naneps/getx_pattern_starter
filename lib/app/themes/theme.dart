@@ -3,95 +3,202 @@ import 'package:flutter/painting.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ThemeApp {
-  static const Color primaryColor = Color(0xFF0D47A1);
-  static const Color secondaryColor = Color.fromARGB(255, 71, 163, 255);
-  static const Color accentColor = Color(0xFFE65100);
-  static const Color errorColor = Color(0xFFB00020);
-  static const Color infoColor = Color(0xFF1976D2);
-  static const Color blackColor = Color.fromARGB(255, 25, 25, 25);
-  static const Color successColor = Color(0xFF388E3C);
-  static const Color warningColor = Color(0xFFFFA000);
-  static const Color backgroundColor = Color.fromARGB(255, 236, 236, 236);
-  static const Color surfaceColor = Color(0xFFFFFFFF);
-  static const Color onPrimaryColor = Color(0xFFFFFFFF);
+  static Color primaryColor = Color(0xFF4f46e5);
+  static Color secondaryColor = Color(0xFFffedd5);
+  static Color accentColor = const Color(0xFF7dd3fc);
+  static Color neutralColor = Color(0xFF362037);
+  static Color infoColor = const Color(0xFFc7d2fe);
+  static Color errorColor = const Color(0xFFF43E56);
+  static Color warningColor = const Color(0xFFF6B02C);
+  static Color successColor = const Color(0xFF0D7766);
+  static Color backgroundColor = Color(0xFFf5f5f4);
+  // static Color secondaryColor = Color.fromRGBO(16, 85, 81, 1);
+  static Color darkColor = const Color.fromARGB(255, 54, 54, 54);
+  static Color dangerColor = const Color.fromARGB(255, 255, 91, 91);
+  static Color grayColor = const Color.fromARGB(255, 239, 239, 255);
+  static Color lightColor = const Color.fromARGB(255, 240, 240, 240);
+  static Color grayTextColor = const Color.fromARGB(255, 168, 168, 168);
+  static Color primaryTextColor = Color.fromARGB(255, 50, 50, 50);
+  static Color secondaryTextColor = const Color.fromARGB(255, 112, 136, 254);
+  static Color darkTextColor = const Color.fromARGB(255, 55, 55, 55);
+  static Color lightTextColor = const Color.fromARGB(255, 240, 240, 240);
+  static Color accentTextColor = const Color.fromARGB(255, 255, 237, 149);
+  static Color errorTextColor = const Color.fromARGB(255, 255, 149, 149);
+  static Color successTextColor = const Color.fromARGB(255, 149, 255, 161);
+  static Color warningTextColor = const Color.fromARGB(255, 255, 220, 149);
 
-  static ThemeData get themeData => ThemeData(
-        primaryColor: primaryColor,
-        primaryColorDark: primaryColor,
-        primaryColorLight: primaryColor,
-        secondaryHeaderColor: secondaryColor,
-        errorColor: errorColor,
-        backgroundColor: backgroundColor,
-        scaffoldBackgroundColor: backgroundColor,
-        canvasColor: backgroundColor,
-        cardColor: surfaceColor,
-        indicatorColor: primaryColor,
-        toggleableActiveColor: primaryColor,
-        fontFamily: GoogleFonts.poppins().fontFamily,
-        textTheme: TextTheme(
-          headline1: TextStyle(
-            fontSize: 96,
-            fontWeight: FontWeight.w300,
-            letterSpacing: -1.5,
-          ),
-          headline2: TextStyle(
-            fontSize: 60,
-            fontWeight: FontWeight.w300,
-            letterSpacing: -0.5,
-          ),
-          headline3: TextStyle(
-            fontSize: 48,
-            fontWeight: FontWeight.w400,
-          ),
-          headline4: TextStyle(
-            fontSize: 34,
-            fontWeight: FontWeight.w400,
-            letterSpacing: 0.25,
-          ),
-          headline5: TextStyle(
-            fontSize: 24,
-            fontWeight: FontWeight.w400,
-          ),
-          headline6: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.w500,
-            letterSpacing: 0.15,
-          ),
-          subtitle1: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w400,
-            letterSpacing: 0.15,
-          ),
-          subtitle2: TextStyle(
-            fontSize: 14,
-            fontWeight: FontWeight.w500,
-            letterSpacing: 0.1,
-          ),
-          bodyText1: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w400,
-            letterSpacing: 0.5,
-          ),
-          bodyText2: TextStyle(
-            fontSize: 14,
-            fontWeight: FontWeight.w400,
-            letterSpacing: 0.25,
-          ),
-          button: TextStyle(
-            fontSize: 14,
-            fontWeight: FontWeight.w500,
-            letterSpacing: 1.25,
-          ),
-          caption: TextStyle(
-            fontSize: 12,
-            fontWeight: FontWeight.w400,
-            letterSpacing: 0.4,
-          ),
-          overline: TextStyle(
-            fontSize: 10,
-            fontWeight: FontWeight.w400,
-            letterSpacing: 1.5,
-          ),
+  static ThemeData defaultTheme = ThemeData(
+    primaryColor: primaryColor,
+    primaryColorDark: neutralColor,
+    primaryColorLight: backgroundColor,
+    errorColor: errorColor,
+    backgroundColor: lightColor,
+    scaffoldBackgroundColor: backgroundColor,
+    fontFamily: GoogleFonts.inter().fontFamily,
+    textTheme: TextTheme(
+      headline1: TextStyle(
+        color: primaryTextColor,
+        fontSize: 96,
+        fontWeight: FontWeight.w300,
+        letterSpacing: -1.5,
+      ),
+      headline2: TextStyle(
+        color: primaryTextColor,
+        fontSize: 60,
+        fontWeight: FontWeight.w300,
+        letterSpacing: -0.5,
+      ),
+      headline3: TextStyle(
+        color: primaryTextColor,
+        fontSize: 48,
+        fontWeight: FontWeight.w400,
+      ),
+      headline4: TextStyle(
+        color: primaryTextColor,
+        fontSize: 34,
+        fontWeight: FontWeight.w400,
+        letterSpacing: 0.25,
+      ),
+      headline5: TextStyle(
+        color: primaryTextColor,
+        fontSize: 24,
+        fontWeight: FontWeight.w400,
+      ),
+      headline6: TextStyle(
+        color: primaryTextColor,
+        fontSize: 20,
+        fontWeight: FontWeight.w500,
+        letterSpacing: 0.15,
+      ),
+      subtitle1: TextStyle(
+        color: primaryTextColor,
+        fontSize: 16,
+        fontWeight: FontWeight.w400,
+        letterSpacing: 0.15,
+      ),
+      subtitle2: TextStyle(
+        color: primaryTextColor,
+        fontSize: 14,
+        fontWeight: FontWeight.w500,
+        letterSpacing: 0.1,
+      ),
+      bodyText1: TextStyle(
+        color: primaryTextColor,
+        fontSize: 16,
+        fontWeight: FontWeight.w400,
+        letterSpacing: 0.5,
+      ),
+      bodyText2: TextStyle(
+        color: primaryTextColor,
+        fontSize: 14,
+        fontWeight: FontWeight.w400,
+        letterSpacing: 0.25,
+      ),
+      button: TextStyle(
+        color: primaryTextColor,
+        fontSize: 14,
+        fontWeight: FontWeight.w500,
+        letterSpacing: 1.25,
+      ),
+      caption: TextStyle(
+        color: primaryTextColor,
+        fontSize: 12,
+        fontWeight: FontWeight.w400,
+        letterSpacing: 0.4,
+      ),
+      overline: TextStyle(
+        color: primaryTextColor,
+        fontSize: 10,
+        fontWeight: FontWeight.w400,
+        letterSpacing: 1.5,
+      ),
+    ),
+    inputDecorationTheme: InputDecorationTheme(
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(8),
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(8),
+        borderSide: BorderSide(
+          color: grayColor,
         ),
-      );
+      ),
+      hintStyle: TextStyle(
+        color: grayTextColor,
+        fontSize: 14,
+      ),
+      disabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(8),
+        borderSide: BorderSide(
+          color: grayColor,
+        ),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(8),
+        borderSide: BorderSide(
+          color: darkColor.withOpacity(0.5),
+        ),
+      ),
+      errorBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(8),
+        borderSide: BorderSide(
+          color: errorColor,
+        ),
+      ),
+      focusedErrorBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(8),
+        borderSide: BorderSide(
+          color: errorColor,
+        ),
+      ),
+      labelStyle: TextStyle(
+        color: darkColor,
+        fontSize: 14,
+      ),
+      errorStyle: TextStyle(
+        color: errorColor,
+      ),
+      suffixIconColor: primaryColor,
+      suffixStyle: TextStyle(
+        color: primaryColor,
+      ),
+      prefixIconColor: primaryColor,
+      prefixStyle: TextStyle(
+        color: primaryColor,
+      ),
+    ),
+    colorScheme: ColorScheme.fromSwatch().copyWith(secondary: accentColor),
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ElevatedButton.styleFrom(
+        foregroundColor: lightTextColor,
+        backgroundColor: primaryColor,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8),
+        ),
+      ),
+    ),
+    appBarTheme: AppBarTheme(
+      color: primaryColor,
+      elevation: 0,
+      iconTheme: IconThemeData(
+        color: lightTextColor,
+      ),
+      toolbarTextStyle: TextTheme(
+        headline6: TextStyle(
+          color: lightTextColor,
+          fontSize: 20,
+          fontWeight: FontWeight.w500,
+          letterSpacing: 0.15,
+        ),
+      ).bodyText2,
+      titleTextStyle: TextTheme(
+        headline6: TextStyle(
+          color: lightTextColor,
+          fontSize: 20,
+          fontWeight: FontWeight.w500,
+          letterSpacing: 0.15,
+        ),
+      ).headline6,
+    ),
+  );
 }
