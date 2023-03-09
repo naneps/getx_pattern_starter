@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:getx_pattern_starter/app/common/buttons/XButton.dart';
 import 'package:getx_pattern_starter/app/common/input/XField.dart';
+import 'package:getx_pattern_starter/app/routes/app_pages.dart';
 import 'package:getx_pattern_starter/app/themes/theme.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -195,6 +196,7 @@ class AuthView extends GetView<AuthController> {
                     icon: MdiIcons.accountPlusOutline,
                     onPressed: () {
                       // controller.register();
+                      Get.toNamed(Routes.REGISTER);
                     },
                   ),
                 ],
