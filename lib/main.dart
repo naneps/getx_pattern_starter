@@ -16,7 +16,7 @@ void main() async {
     GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: "Application",
-      initialRoute: AppPages.INITIAL,
+      initialRoute: Routes.AUTH,
       getPages: AppPages.routes,
       theme: ThemeApp.defaultTheme,
     ),

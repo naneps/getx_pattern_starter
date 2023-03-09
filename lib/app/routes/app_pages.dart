@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:getx_pattern_starter/app/modules/auth/views/register_view.dart';
 
 import '../modules/auth/bindings/auth_binding.dart';
 import '../modules/auth/views/auth_view.dart';
@@ -23,6 +24,11 @@ class AppPages {
     GetPage(
       name: _Paths.AUTH,
       page: () => AuthView(),
+      binding: AuthBinding(),
+    ),
+    GetPage(
+      name: _Paths.REGISTER,
+      page: () => RegisterView(),
       binding: AuthBinding(),
     ),
     GetPage(

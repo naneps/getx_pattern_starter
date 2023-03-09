@@ -2,10 +2,10 @@ name: getx_pattern_starter
 version: 1.0.0+1
 publish_to: none
 description: A new Flutter project.
-environment: 
-  sdk: '>=2.18.2 <3.0.0'
+environment:
+  sdk: ">=2.18.2 <3.0.0"
 
-dependencies: 
+dependencies:
   cupertino_icons: ^1.0.2
   get: 4.6.4
   image_picker: 0.8.6
@@ -14,16 +14,17 @@ dependencies:
   material_design_icons_flutter: 6.0.7096
   location: 4.4.0
   geolocator: 9.0.2
-  flutter: 
+  flutter:
     sdk: flutter
   intl: ^0.18.0
   loading_animation_widget: ^1.2.0+4
 
-dev_dependencies: 
+dev_dependencies:
   flutter_lints: ^2.0.0
-  flutter_test: 
+  flutter_test:
     sdk: flutter
 
-flutter: 
+flutter:
+  assets:
+    - assets/images/
   uses-material-design: true
-
