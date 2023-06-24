@@ -7,7 +7,8 @@ class XSlideTransition extends StatefulWidget {
   final Offset offset;
   final Duration delay;
 
-  XSlideTransition({
+  const XSlideTransition({
+    super.key,
     required this.child,
     this.duration = const Duration(milliseconds: 500),
     this.offset = const Offset(1, 0),
@@ -21,50 +22,45 @@ class XSlideTransition extends StatefulWidget {
 
 class _XSlideTransitionState extends State<XSlideTransition>
     with TickerProviderStateMixin {
-  AnimationController? _controller;
+  late AnimationController _controller;
+  late Animation<Offset> _offsetAnimation;
 
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(duration: widget.duration, vsync: this);
+    _controller = AnimationController(
+      duration: widget.duration,
+      vsync: this,
+    );
+    _offsetAnimation = Tween<Offset>(
+      begin: _slideFrom(widget.direction),
+      end: Offset.zero,
+    ).animate(
+      CurvedAnimation(
+        parent: _controller,
+        curve: Curves.easeInOutBack,
+        reverseCurve: Curves.easeInOutBack,
+      ),
+    );
     Future.delayed(widget.delay, () {
-      _controller!.forward();
+      _controller.forward();
     });
   }
 
-  // when screen going closed reverse animation
+  @override
+  void dispose() {
+    _controller.dispose(); // Dispose the AnimationController
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return SlideTransition(
-      position:
-          Tween<Offset>(begin: _slideFrom(widget.direction), end: Offset.zero)
-              .animate(
-        CurvedAnimation(
-          parent: _controller!,
-          curve: Curves.easeInOutBack,
-          reverseCurve: Curves.easeInOutBack,
-        ),
-      ),
+      position: _offsetAnimation,
       child: widget.child,
     );
   }
 
-  // @override
-  // void deactivate() {
-  //   super.deactivate();
-  //   _controller!.reverseDuration = Duration(milliseconds: 500);
-  //   _controller!
-  //       .reverse(from: _controller!.value == 0.0 ? 1.0 : _controller!.value);
-  // }
-
-  @override
-  void dispose() {
-    _controller!.dispose();
-    super.dispose();
-  }
-
-  // WHEN WIDGET IS REMOVED FROM THE WIDGET TREE
   Offset _slideFrom(SlideDirection direction) {
     switch (direction) {
       case SlideDirection.left:

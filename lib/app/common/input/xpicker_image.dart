@@ -13,22 +13,31 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 class XPickerImage extends GetView<PickerController> {
   Function(XFile) onImagePicked;
   String? networkImage;
+  RadiusType? radiusType;
+  double? radius;
   double? size;
+  EdgeInsets? padding;
+  EdgeInsets? margin;
   XPickerImage({
     this.networkImage,
     required this.onImagePicked,
     required this.size,
+    this.radiusType = RadiusType.rounded,
+    this.padding,
+    this.margin = const EdgeInsets.all(0),
+    this.radius = 10,
     Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return RoundedContainer(
-      height: size! + 40,
-      width: size! + 40,
-      margin: EdgeInsets.symmetric(vertical: 15, horizontal: 0),
-      hasShadow: false,
-      hasBorder: false,
+      height: size! + 30,
+      width: size! + 30,
+      hasBorder: true,
+
+      margin: margin,
+      // color: Colors.amber,
       child: InkWell(
         onTap: () {
           showPicker();
@@ -50,7 +59,10 @@ class XPickerImage extends GetView<PickerController> {
                       image: Image.file(File(state.path)).image,
                       fit: BoxFit.cover,
                     ),
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: Utils.handleRequestRadius(
+                      radiusType: radiusType!,
+                      radius: radius!,
+                    ),
                     border: Border.all(
                       color: ThemeApp.grayColor.withOpacity(0.5),
                       width: 1,
@@ -63,15 +75,15 @@ class XPickerImage extends GetView<PickerController> {
                 height: size,
                 decoration: BoxDecoration(
                   borderRadius: Utils.handleRequestRadius(
-                    radiusType: RadiusType.rounded,
+                    radiusType: radiusType!,
+                    radius: radius!,
                   ),
-                  color: Colors.grey[300],
                   image: networkImage != null
                       ? DecorationImage(
-                          image: NetworkImage(networkImage!),
+                          image: NetworkImage(networkImage ?? ''),
                           fit: BoxFit.cover,
                         )
-                      : DecorationImage(
+                      : const DecorationImage(
                           image: AssetImage('assets/images/placeholder.jpg'),
                           fit: BoxFit.cover,
                         ),
@@ -79,14 +91,17 @@ class XPickerImage extends GetView<PickerController> {
               ),
             ),
             Positioned(
-                child: RoundedContainer(
-                  hasBorder: true,
-                  width: 40,
-                  height: 40,
-                  child: Icon(MdiIcons.camera, color: ThemeApp.darkColor),
-                ),
-                bottom: 10,
-                right: 10)
+              bottom: 0,
+              right: 0,
+              child: RoundedContainer(
+                hasBorder: true,
+                width: 40,
+                height: 40,
+                radiusType: RadiusType.circle,
+                hasShadow: true,
+                child: Icon(MdiIcons.camera, color: ThemeApp.darkColor),
+              ),
+            )
           ],
         ),
       ),
@@ -97,7 +112,7 @@ class XPickerImage extends GetView<PickerController> {
     Get.dialog(
       Dialog(
         backgroundColor: Colors.transparent,
-        insetPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+        insetPadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
         child: Container(
           color: Colors.transparent,
           height: Get.height,
@@ -107,7 +122,7 @@ class XPickerImage extends GetView<PickerController> {
             children: [
               // close button in top right corner
 
-              Container(
+              SizedBox(
                 width: Get.width,
                 child: controller.obx(
                   (state) {
@@ -134,14 +149,14 @@ class XPickerImage extends GetView<PickerController> {
                               image: NetworkImage(networkImage!),
                               fit: BoxFit.cover,
                             )
-                          : DecorationImage(
+                          : const DecorationImage(
                               image:
                                   AssetImage('assets/images/placeholder.jpg'),
                               fit: BoxFit.cover,
                             ),
                     ),
                   ),
-                  onLoading: Center(
+                  onLoading: const Center(
                     child: CircularProgressIndicator(),
                   ),
                 ),
@@ -150,7 +165,7 @@ class XPickerImage extends GetView<PickerController> {
                 top: 0,
                 right: 0,
                 child: IconButton(
-                  icon: Icon(
+                  icon: const Icon(
                     MdiIcons.closeCircle,
                     color: Colors.white,
                     size: 40,
@@ -168,7 +183,7 @@ class XPickerImage extends GetView<PickerController> {
   void showPicker() {
     Get.bottomSheet(
       Container(
-        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
         color: Colors.white,
         height: 150,
         child: Column(
@@ -178,8 +193,8 @@ class XPickerImage extends GetView<PickerController> {
               height: 50,
               child: ListTile(
                 contentPadding:
-                    EdgeInsets.symmetric(horizontal: 20, vertical: 0),
-                leading: Icon(MdiIcons.camera),
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
+                leading: const Icon(MdiIcons.camera),
                 title: Text(
                   'Pilih Dari Kamera',
                   style: TextStyle(
@@ -193,14 +208,14 @@ class XPickerImage extends GetView<PickerController> {
                 },
               ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             RoundedContainer(
               width: Get.width,
               height: 50,
               child: ListTile(
                 contentPadding:
-                    EdgeInsets.symmetric(horizontal: 20, vertical: 0),
-                leading: Icon(MdiIcons.image),
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
+                leading: const Icon(MdiIcons.image),
                 title: Text(
                   'Pilih Dari Galeri',
                   style: TextStyle(
@@ -225,15 +240,8 @@ class PickerController extends GetxController with StateMixin {
   Rx<XFile> image = XFile('').obs;
   @override
   void onInit() {
-    // TODO: implement onInit
     change(null, status: RxStatus.empty());
     super.onInit();
-  }
-
-  @override
-  void onClose() {
-    // TODO: implement onClose
-    super.onClose();
   }
 
   Future<XFile> pickImageFromGallery() async {
@@ -251,7 +259,7 @@ class PickerController extends GetxController with StateMixin {
   Future<XFile> pickImageFromCamera() async {
     final pickedFile =
         await Get.find<ImagePickerService>().pickImageFromCamera();
-    if (pickedFile != null) {
+    if (pickedFile.path.isNotEmpty) {
       change(pickedFile, status: RxStatus.loading());
       change(pickedFile, status: RxStatus.success());
       image.value = pickedFile;

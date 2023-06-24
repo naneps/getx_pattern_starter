@@ -1,5 +1,5 @@
-import 'package:getx_pattern_starter/app/themes/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:getx_pattern_starter/app/themes/theme.dart';
 
 class XTextField extends StatelessWidget {
   final TextEditingController? controller;
@@ -12,12 +12,13 @@ class XTextField extends StatelessWidget {
   final int? minLines;
   final bool? obscureText;
   final bool? disabled;
-
+  final bool? filled;
   final IconData? icon;
   final TextInputType? keyboardType;
   final ValueChanged<String>? onChanged;
   final Function? onTap;
   final Function? onSubmitted;
+  final Color? fillColor;
   final Function(String?)? onSave;
   // final Function? onEditingComplete;
   final dynamic validator;
@@ -41,6 +42,8 @@ class XTextField extends StatelessWidget {
       this.suffixIcon,
       this.onPressSuffix,
       this.initialValue,
+      this.filled = false,
+      this.fillColor = Colors.white,
       this.disabled,
       this.onSave});
 
@@ -58,12 +61,12 @@ class XTextField extends StatelessWidget {
       enableSuggestions: true,
       onSaved: onSave,
       controller: controller,
+      cursorColor: ThemeApp.neutralColor,
       enabled: disabled == true ? false : true,
       obscureText: obscureText ?? false,
       decoration: InputDecoration(
-        fillColor: Colors.white,
+        fillColor: fillColor,
         filled: true,
-
         suffixIcon: IconButton(
           onPressed: onPressSuffix,
           icon: Icon(
@@ -75,7 +78,6 @@ class XTextField extends StatelessWidget {
                 prefixIcon,
               )
             : null,
-        // labelText: "Deskripsi Di Sini Yaa",
         hintText: hintText,
         labelText: labelText,
       ),

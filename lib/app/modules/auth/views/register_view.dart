@@ -1,12 +1,12 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:getx_pattern_starter/app/common/input/XField.dart';
+import 'package:getx_pattern_starter/app/common/input/x_field.dart';
 import 'package:getx_pattern_starter/app/modules/auth/controllers/auth_controller.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class RegisterView extends GetView<AuthController> {
+  const RegisterView({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,14 +18,14 @@ class RegisterView extends GetView<AuthController> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               // MAKE COPY WRITER FOR REGISTER
-              Text(
+              const Text(
                 "Register",
                 style: TextStyle(
                   fontSize: 30,
                   fontWeight: FontWeight.w700,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 15,
               ),
               XTextField(
@@ -39,7 +39,7 @@ class RegisterView extends GetView<AuthController> {
                   return null;
                 },
               ),
-              SizedBox(
+              const SizedBox(
                 height: 15,
               ),
               XTextField(
@@ -53,7 +53,7 @@ class RegisterView extends GetView<AuthController> {
                   return null;
                 },
               ),
-              SizedBox(
+              const SizedBox(
                 height: 15,
               ),
               XTextField(
@@ -67,7 +67,7 @@ class RegisterView extends GetView<AuthController> {
                   return null;
                 },
               ),
-              SizedBox(
+              const SizedBox(
                 height: 15,
               ),
               XTextField(

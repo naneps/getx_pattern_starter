@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:getx_pattern_starter/app/themes/theme.dart';
 
 // ignore: must_be_immutable
+
+// ignore: must_be_immutable
 class XIconButton extends StatelessWidget {
   Color? color;
   Color? supportColor;
@@ -9,6 +11,7 @@ class XIconButton extends StatelessWidget {
   String? tooltip;
   EdgeInsets? margin;
   EdgeInsets? padding;
+  bool? hasShadow;
   IconData icon;
   double? size;
   Color? backgroundColor;
@@ -24,6 +27,7 @@ class XIconButton extends StatelessWidget {
     this.size,
     this.margin,
     this.tooltip,
+    this.hasShadow = false,
     this.padding,
     required this.icon,
     Key? key,
@@ -49,21 +53,23 @@ class XIconButton extends StatelessWidget {
         ),
         child: Container(
           margin: margin ?? const EdgeInsets.all(5),
-          padding: padding ?? EdgeInsets.all(5),
+          padding: padding ?? const EdgeInsets.all(5),
           decoration: BoxDecoration(
             color: backgroundColor ?? Colors.white,
             border: Border.all(
-              color: supportColor!.withOpacity(0.5),
+              color: supportColor!,
             ),
             borderRadius: BorderRadius.circular(10),
-            boxShadow: [
-              BoxShadow(
-                color: shadowColor!.withOpacity(0.2),
-                spreadRadius: 0,
-                blurRadius: 48,
-                offset: const Offset(0, 28), // changes position of shadow
-              ),
-            ],
+            boxShadow: hasShadow!
+                ? [
+                    BoxShadow(
+                      color: shadowColor!.withOpacity(0.2),
+                      spreadRadius: 0,
+                      blurRadius: 48,
+                      offset: const Offset(0, 28), // changes position of shadow
+                    ),
+                  ]
+                : null,
           ),
           child: Icon(
             icon,

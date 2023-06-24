@@ -3,6 +3,7 @@ import 'dart:io';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:getx_pattern_starter/app/themes/theme.dart';
 import 'package:intl/intl.dart';
@@ -40,7 +41,8 @@ class Utils {
       case "th":
         return NumberFormat.currency(locale: 'th', symbol: '฿').format(amount);
       default:
-        return NumberFormat.currency(locale: 'en', symbol: '\$').format(amount);
+        return NumberFormat.currency(locale: 'id', symbol: '', decimalDigits: 0)
+            .format(amount);
     }
   }
 
@@ -50,70 +52,53 @@ class Utils {
   }) {
     switch (radiusType) {
       case RadiusType.circle:
-        return BorderRadius.circular(MediaQuery.of(Get.context!).size.width);
+        return BorderRadius.circular(10000);
+
       case RadiusType.oval:
-        return BorderRadius.only(
-          topLeft: Radius.circular(radius),
-          topRight: Radius.circular(radius),
-          bottomLeft: Radius.circular(radius),
-          bottomRight: Radius.circular(radius),
-        );
+        return BorderRadius.all(Radius.circular(radius));
+
+      case RadiusType.rounded:
+        return BorderRadius.circular(radius);
+
       case RadiusType.onlyTopLeft:
-        return BorderRadius.only(
-          topLeft: Radius.circular(radius),
-          topRight: const Radius.circular(0),
-          bottomLeft: const Radius.circular(0),
-          bottomRight: const Radius.circular(0),
-        );
+        return BorderRadius.only(topLeft: Radius.circular(radius));
+
       case RadiusType.onlyTopRight:
-        return BorderRadius.only(
-          topLeft: const Radius.circular(0),
-          topRight: Radius.circular(radius),
-          bottomLeft: const Radius.circular(0),
-          bottomRight: const Radius.circular(0),
-        );
+        return BorderRadius.only(topRight: Radius.circular(radius));
+
       case RadiusType.onlyBottomLeft:
-        return BorderRadius.only(
-          topLeft: const Radius.circular(0),
-          topRight: const Radius.circular(0),
-          bottomLeft: Radius.circular(radius),
-          bottomRight: const Radius.circular(0),
-        );
+        return BorderRadius.only(bottomLeft: Radius.circular(radius));
+
       case RadiusType.onlyBottomRight:
-        return BorderRadius.only(
-          topLeft: const Radius.circular(0),
-          topRight: const Radius.circular(0),
-          bottomLeft: const Radius.circular(0),
-          bottomRight: Radius.circular(radius),
-        );
+        return BorderRadius.only(bottomRight: Radius.circular(radius));
+
       case RadiusType.onlyTop:
-        return BorderRadius.only(
-          topLeft: Radius.circular(radius),
-          topRight: Radius.circular(radius),
-          bottomLeft: const Radius.circular(0),
-          bottomRight: const Radius.circular(0),
-        );
+        return BorderRadius.vertical(top: Radius.circular(radius));
+
       case RadiusType.onlyBottom:
-        return BorderRadius.only(
-          topLeft: const Radius.circular(0),
-          topRight: const Radius.circular(0),
-          bottomLeft: Radius.circular(radius),
-          bottomRight: Radius.circular(radius),
-        );
+        return BorderRadius.vertical(bottom: Radius.circular(radius));
+
       case RadiusType.onlyLeft:
+        return BorderRadius.horizontal(left: Radius.circular(radius));
+
+      case RadiusType.onlyRight:
+        return BorderRadius.horizontal(right: Radius.circular(radius));
+
+      case RadiusType.diagonal1:
         return BorderRadius.only(
           topLeft: Radius.circular(radius),
-          topRight: const Radius.circular(0),
-          bottomLeft: Radius.circular(radius),
-          bottomRight: const Radius.circular(0),
-        );
-      case RadiusType.onlyRight:
-        return BorderRadius.only(
-          topLeft: const Radius.circular(0),
-          topRight: Radius.circular(radius),
-          bottomLeft: const Radius.circular(0),
           bottomRight: Radius.circular(radius),
         );
+
+      case RadiusType.diagonal2:
+        return BorderRadius.only(
+          topRight: Radius.circular(radius),
+          bottomLeft: Radius.circular(radius),
+        );
+
+      case RadiusType.none:
+        return BorderRadius.zero;
+
       default:
         return BorderRadius.circular(radius);
     }
@@ -174,88 +159,217 @@ class Utils {
   //     ),
   //   );
   // }
-  static void successMessage(String message) {
+  static void snackbarLoading() {
     Get.snackbar(
-      'Berhasil',
-      message,
+      "Loading",
+      "Please wait...",
       snackPosition: SnackPosition.TOP,
-      backgroundColor: ThemeApp.successColor,
-      messageText: Text(
-        message,
-        style: const TextStyle(
-          color: Colors.white,
-        ),
-      ),
-      forwardAnimationCurve: Curves.easeInOutBack,
-      reverseAnimationCurve: Curves.easeInOutBack,
-      titleText: const Text(
-        'Berhasil',
+      titleText: Text(
+        "Loading",
         style: TextStyle(
-          color: Colors.white,
+          color: ThemeApp.neutralColor,
           fontWeight: FontWeight.bold,
         ),
       ),
-      colorText: ThemeApp.darkColor,
-      margin: const EdgeInsets.all(15),
-      borderRadius: 10,
-      duration: const Duration(seconds: 3),
-      icon: const Icon(
-        MdiIcons.alertCircle,
-        color: Colors.white,
-        size: 40,
-      ),
-      animationDuration: const Duration(milliseconds: 500),
+      // icon: Icon(
+      //   MdiIcons.loading,
+      //   color: ThemeApp.neutralColor,
+      //   size: 35,
+      // ),
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-      backgroundGradient: LinearGradient(
-        colors: [
-          ThemeApp.successColor.withOpacity(0.8),
-          ThemeApp.successColor,
-          ThemeApp.successColor.withOpacity(0.5),
-        ],
+      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+      messageText: Text(
+        "Please wait...",
+        style: TextStyle(
+          color: ThemeApp.neutralColor,
+          fontWeight: FontWeight.w500,
+        ),
       ),
-      barBlur: 100,
+      backgroundColor: Colors.white,
+      showProgressIndicator: true,
+      progressIndicatorValueColor: AlwaysStoppedAnimation<Color>(
+        ThemeApp.neutralColor,
+      ),
+      barBlur: 20,
+      borderColor: ThemeApp.neutralColor,
+      borderWidth: 1,
+      borderRadius: 10,
+      leftBarIndicatorColor: ThemeApp.neutralColor,
+      overlayColor: Colors.black.withOpacity(0.2),
+      shouldIconPulse: true,
+      colorText: ThemeApp.successColor,
+      animationDuration: const Duration(milliseconds: 500),
+      forwardAnimationCurve: Curves.easeInOutBack,
+      reverseAnimationCurve: Curves.easeOutQuart,
     );
+  }
+
+  static void successMessage(String message) {
+    Get.snackbar(
+      "Success",
+      message,
+      snackPosition: SnackPosition.TOP,
+      titleText: Text(
+        "Success",
+        style: TextStyle(
+          color: ThemeApp.neutralColor,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+      icon: Icon(
+        Icons.check_circle,
+        color: ThemeApp.successColor,
+        size: 35,
+      ),
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+      messageText: Text(
+        message,
+        style: TextStyle(
+          color: ThemeApp.neutralColor,
+          fontWeight: FontWeight.w500,
+        ),
+      ),
+      backgroundColor: Colors.white,
+      barBlur: 20,
+      leftBarIndicatorColor: ThemeApp.successColor,
+      overlayColor: Colors.black.withOpacity(0.2),
+      shouldIconPulse: true,
+      borderColor: ThemeApp.successColor,
+      borderWidth: 1,
+      margin: const EdgeInsets.all(8),
+      borderRadius: 10,
+      snackStyle: SnackStyle.FLOATING,
+      dismissDirection: DismissDirection.horizontal,
+      maxWidth: Get.width,
+      animationDuration: const Duration(milliseconds: 500),
+      forwardAnimationCurve: Curves.easeInOutBack,
+      reverseAnimationCurve: Curves.easeOutQuart,
+    );
+  }
+
+  static void snackMessage({
+    required String title,
+    required String? messages,
+    String? type = "default",
+  }) {
+    Get.snackbar(
+      title,
+      messages!,
+      snackPosition: SnackPosition.TOP,
+      titleText: Text(
+        title,
+        style: TextStyle(
+          color: ThemeApp.neutralColor,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+      icon: Icon(
+        handleTypeIcon(type!),
+        color: handleTypeColor(type),
+        size: 35,
+      ),
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+      messageText: Text(
+        messages,
+        style: TextStyle(
+          color: ThemeApp.neutralColor,
+          fontWeight: FontWeight.w500,
+        ),
+      ),
+      backgroundColor: Colors.white,
+      barBlur: 20,
+      leftBarIndicatorColor: handleTypeColor(type),
+      overlayColor: Colors.black.withOpacity(0.2),
+      shouldIconPulse: true,
+      borderColor: handleTypeColor(type),
+      borderWidth: 1,
+      margin: const EdgeInsets.all(8),
+      borderRadius: 10,
+      snackStyle: SnackStyle.FLOATING,
+      dismissDirection: DismissDirection.horizontal,
+      maxWidth: Get.width,
+      animationDuration: const Duration(milliseconds: 500),
+      forwardAnimationCurve: Curves.easeInOutBack,
+      reverseAnimationCurve: Curves.easeOutQuart,
+    );
+  }
+
+  static Color handleTypeColor(String type) {
+    Color? color;
+    switch (type.toLowerCase()) {
+      case "error":
+        color = ThemeApp.errorColor;
+        break;
+      case "success":
+        color = ThemeApp.successColor;
+        break;
+      case "warning":
+        color = ThemeApp.warningColor;
+        break;
+      default:
+        color = ThemeApp.primaryColor;
+        break;
+    }
+    return color;
+  }
+
+  static IconData handleTypeIcon(String type) {
+    IconData? icon;
+    switch (type.toLowerCase()) {
+      case "error":
+        icon = MdiIcons.closeCircle;
+        break;
+      case "success":
+        icon = MdiIcons.checkCircle;
+        break;
+      case "warning":
+        icon = MdiIcons.alertCircle;
+        break;
+    }
+
+    return icon!;
   }
 
   static void errorMessage(String message) {
     Get.snackbar(
-      'Gagal',
+      "error",
       message,
       snackPosition: SnackPosition.TOP,
-      backgroundColor: ThemeApp.dangerColor,
+      titleText: Text(
+        "error",
+        style: TextStyle(
+          color: ThemeApp.neutralColor,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+      icon: Icon(
+        MdiIcons.closeCircle,
+        color: ThemeApp.errorColor,
+        size: 35,
+      ),
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
       messageText: Text(
         message,
-        style: const TextStyle(
-          color: Colors.white,
-        ),
-      ),
-      forwardAnimationCurve: Curves.easeInOutBack,
-      reverseAnimationCurve: Curves.easeInOutBack,
-      titleText: const Text(
-        'Gagal',
         style: TextStyle(
-          color: Colors.white,
+          color: ThemeApp.neutralColor,
+          fontWeight: FontWeight.w500,
         ),
       ),
-      colorText: ThemeApp.darkColor,
-      margin: const EdgeInsets.all(15),
+      backgroundColor: Colors.white,
+      barBlur: 20,
+      leftBarIndicatorColor: ThemeApp.errorColor,
+      overlayColor: Colors.black.withOpacity(0.2),
+      shouldIconPulse: true,
+      borderColor: ThemeApp.errorColor,
+      borderWidth: 1,
+      margin: const EdgeInsets.all(19),
       borderRadius: 10,
-      duration: const Duration(seconds: 3),
-      icon: const Icon(
-        MdiIcons.alertCircle,
-        color: Colors.white,
-        size: 40,
-      ),
+      snackStyle: SnackStyle.FLOATING,
+      dismissDirection: DismissDirection.horizontal,
+      maxWidth: Get.width,
       animationDuration: const Duration(milliseconds: 500),
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-      backgroundGradient: LinearGradient(
-        colors: [
-          ThemeApp.dangerColor.withOpacity(0.8),
-          ThemeApp.dangerColor,
-          ThemeApp.dangerColor.withOpacity(0.5),
-        ],
-      ),
-      barBlur: 100,
+      forwardAnimationCurve: Curves.easeInOutBack,
+      reverseAnimationCurve: Curves.easeOutQuart,
     );
   }
 
@@ -314,7 +428,7 @@ class Utils {
                 // crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   Text(
@@ -401,90 +515,116 @@ class Utils {
   static Widget loadingWidget() {
     return Center(
       child: LoadingAnimationWidget.staggeredDotsWave(
-        color: ThemeApp.primaryColor.withOpacity(0.8),
+        color: ThemeApp.neutralColor.withOpacity(0.8),
         size: 100,
       ),
     );
   }
 
-  static String dateFormatter(String date) {
-    // make like 01 Januari 2021 12:00:00
+  static String dateTimeFormatter(String date) {
     DateTime dateTime = DateTime.parse(date);
-    int day = dateTime.day;
-    int month = dateTime.month;
-    int year = dateTime.year;
-    int hour = dateTime.hour;
-    int minute = dateTime.minute;
-    int second = dateTime.second;
-    String dayString = day.toString();
-    String monthString = monthFormatter(month);
-    String yearString = year.toString();
-    String hourString = hour.toString();
-    String minuteString = minute.toString();
-    String secondString = second.toString();
-    if (day < 10) {
-      dayString = '0$day';
+    String dayString = '${dateTime.day}'.padLeft(2, '0');
+    String monthString = monthFormatter(dateTime.month);
+    String yearString = '${dateTime.year}';
+    String hourString = '${dateTime.hour}'.padLeft(2, '0');
+    String minuteString = '${dateTime.minute}'.padLeft(2, '0');
+    String secondString = '${dateTime.second}'.padLeft(2, '0');
+
+    return '$dayString $monthString $yearString $hourString:$minuteString:$secondString';
+  }
+
+  static String dMYFormat(String date) {
+    DateTime dateTime = DateTime.parse(date);
+    String dayString = '${dateTime.day}'.padLeft(2, '0');
+    String monthString = monthFormatter(dateTime.month);
+    String yearString = '${dateTime.year}';
+
+    return '$dayString $monthString $yearString';
+  }
+
+  static String yearFormatter(String date) {
+    DateTime dateTime = DateTime.parse(date);
+    String yearString = '${dateTime.year}';
+
+    return yearString;
+  }
+
+  static String timeFormatter(String date) {
+    DateTime dateTime = DateTime.parse(date);
+    String hourString = '${dateTime.hour}'.padLeft(2, '0');
+    String minuteString = '${dateTime.minute}'.padLeft(2, '0');
+
+    return '$hourString:$minuteString';
+  }
+
+  static String dayMonthFormatter(String date) {
+    DateTime dateTime = DateTime.parse(date);
+    String dayString = '${dateTime.day}'.padLeft(2, '0');
+    String monthString = monthFormatter(dateTime.month);
+
+    return '$dayString $monthString';
+  }
+
+  static String dayMonthTimeFormat(String date) {
+    DateTime dateTime = DateTime.parse(date);
+    String dayString = '${dateTime.day}'.padLeft(2, '0');
+    String monthString = monthFormatter(dateTime.month);
+    String hourString = '${dateTime.hour}'.padLeft(2, '0');
+    String minuteString = '${dateTime.minute}'.padLeft(2, '0');
+
+    return '$dayString $monthString | $hourString:$minuteString';
+  }
+
+  static String dateFromNow(String date) {
+    final DateTime dateTime = DateTime.parse(date);
+    final Duration difference = DateTime.now().difference(dateTime);
+
+    if (difference.inSeconds < 60) {
+      return 'baru saja';
+    } else if (difference.inMinutes < 60) {
+      final int minutes = difference.inMinutes;
+      return '$minutes menit yang lalu';
+    } else if (difference.inHours < 24) {
+      final int hours = difference.inHours;
+      return '$hours jam yang lalu';
+    } else if (difference.inDays < 30) {
+      final int days = difference.inDays;
+      return '$days hari yang lalu';
+    } else if (difference.inDays < 365) {
+      final int months = (difference.inDays / 30).floor();
+      return '$months bulan yang lalu';
+    } else if (difference.inDays > 365) {
+      final int years = (difference.inDays / 365).floor();
+      return '$years tahun yang lalu';
+    } else {
+      return dateTimeFormatter(date);
     }
-    if (month < 10) {
-      monthString = '0$month';
-    }
-    if (hour < 10) {
-      hourString = '0$hour';
-    }
-    if (minute < 10) {
-      minuteString = '0$minute';
-    }
-    if (second < 10) {
-      secondString = '0$second';
-    }
-    return '$dayString-$monthString-$yearString | $hourString:$minuteString:$secondString';
   }
 
   static String monthFormatter(int month) {
-    // if month is 1, return Januari make like this
-    String monthName = '';
-    switch (month) {
-      case 1:
-        monthName = 'Januari';
-        break;
-      case 2:
-        monthName = 'Februari';
-        break;
-      case 3:
-        monthName = 'Maret';
-        break;
-      case 4:
-        monthName = 'April';
-        break;
-      case 5:
-        monthName = 'Mei';
-        break;
-      case 6:
-        monthName = 'Juni';
-        break;
-      case 7:
-        monthName = 'Juli';
-        break;
-      case 8:
-        monthName = 'Agustus';
-        break;
-      case 9:
-        monthName = 'September';
-        break;
-      case 10:
-        monthName = 'Oktober';
-        break;
-      case 11:
-        monthName = 'November';
-        break;
-      case 12:
-        monthName = 'Desember';
-        break;
-      default:
-        monthName = 'Januari';
-    }
-    return monthName;
+    final monthNames = {
+      1: 'Januari',
+      2: 'Februari',
+      3: 'Maret',
+      4: 'April',
+      5: 'Mei',
+      6: 'Juni',
+      7: 'Juli',
+      8: 'Agustus',
+      9: 'September',
+      10: 'Oktober',
+      11: 'November',
+      12: 'Desember',
+    };
+
+    return monthNames[month] ?? 'Januari';
   }
+
+  static void hapticFeedback() {
+    HapticFeedback.mediumImpact();
+  }
+
+  static void launchURL(String s) {}
 }
 
 enum RadiusType {
@@ -501,5 +641,6 @@ enum RadiusType {
   onlyRight,
   diagonal1,
   diagonal2,
-  none
+  none,
+  normal
 }

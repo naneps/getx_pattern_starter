@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
-import 'package:getx_pattern_starter/app/common/buttons/XButton.dart';
-import 'package:getx_pattern_starter/app/common/input/XField.dart';
+import 'package:getx_pattern_starter/app/common/buttons/x_button.dart';
+import 'package:getx_pattern_starter/app/common/input/x_field.dart';
 import 'package:getx_pattern_starter/app/routes/app_pages.dart';
 import 'package:getx_pattern_starter/app/themes/theme.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 import '../controllers/auth_controller.dart';
@@ -15,14 +13,14 @@ class AuthView extends GetView<AuthController> {
   const AuthView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final _formKey = GlobalKey<FormState>();
+    final formKey = GlobalKey<FormState>();
     return Scaffold(
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 19),
           child: SingleChildScrollView(
             child: Form(
-              key: _formKey,
+              key: formKey,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -147,8 +145,8 @@ class AuthView extends GetView<AuthController> {
                     hasIcon: true,
                     icon: MdiIcons.login,
                     onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        _formKey.currentState!.save();
+                      if (formKey.currentState!.validate()) {
+                        formKey.currentState!.save();
                         // controller.login();
                       }
                     },
